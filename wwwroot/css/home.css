@@ -1,0 +1,57 @@
+.bg-cp{
+    background-color: #a5c9ec;
+}
+.fs-7
+{
+    font-size: 15px;
+}
+.fs-8{
+    font-size: 13px;
+}
+.inp-width
+{
+    width: 170px;
+}
+.inp-height
+{
+    height: 52px;
+}
+.date-wid
+{
+    width: 220px;
+}
+html {
+    height: 100%;
+   
+}
+
+body {
+    margin: 0; /* Tarayıcı kenar boşluklarını kaldırır */
+    padding: 0; /* Tarayıcı paddinglerini kaldırır */
+    background: url('../img/Airplane.webp') no-repeat center center fixed; 
+    background-size: cover; /* Resmi kaplayacak şekilde boyutlandırır */
+    height: 100%;
+}
+/* Yeni swap butonu için stil */
+.swap-button {
+    position: absolute; /* Butonu pozisyonlamak için absolute kullanın */
+    top: 50%; /* Butonu kutunun ortasına yerleştir */
+    right: -30px; /* Butonu kutuların dışına taşıyın */
+    transform: translateY(-50%); /* Butonu dikey olarak ortala */
+  }
+  
+  @media (max-width: 768px) {
+    .swap-button {
+      position: static;
+      transform: none;
+      top: auto;
+      right: auto;
+      margin-top: 10px; /* Mobil görünümde butonu aşağıya taşı */
+    }
+    /* Mobil görünümde form elemanlarını düzenleyin */
+    .form-row .col-md-2 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+  

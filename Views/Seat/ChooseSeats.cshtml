@@ -1,0 +1,33 @@
+@model ChooseSeatsViewModel
+
+<link rel="stylesheet" href="~/css/seat.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div class="container py-2">
+        <div class=" card text-white bg-dark mb-3">
+    <form id="seatSelectionForm" method="post">
+        <input type="hidden" id="FlightId" value="@Model.FlightId" />
+        <div class="row seat-selection-form">
+            @foreach (var seat in Model.Seats) {
+                <div class="col-md-6 seat-container @(seat.IsOccupied ? "seat-occupied" : "")">
+                    <input type="radio" name="SelectedSeat" value="@seat.SeatId"
+                           id="seat-@seat.SeatNumber" class="seat-radio" hidden
+                           @(seat.IsOccupied ? "disabled" : "") />
+                    <label for="seat-@seat.SeatNumber" class="seat-label">
+                        <img src="~/img/seat.png" alt="Seat" class="seat-icon" />
+                        @_localization.Getkey("Seat").Value @seat.SeatNumber.Substring(5)
+                    </label>
+                    @if (seat.IsOccupied) {
+                        <span class="text-danger">(Dolu)</span>
+                    }
+                </div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary"> @_localization.Getkey("Seat").Value  @_localization.Getkey("Choose").Value</button>
+    </form>
+</div>
+</div>
+
+
+
+<script src="~/js/seat.js" asp-append-version="true"></script>

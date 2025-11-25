@@ -1,0 +1,161 @@
+﻿@model FlightViewModel
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+
+{
+  <div class="alert alert-success">
+    @TempData["SuccessMessage"]
+  </div>
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" /> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+  <title>Ana Sayfa</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <form action="/Flight/SearchFlights" method="post">
+      <!-- Index.cshtml içinde <form> tag'ı içinde -->
+
+
+      <div class="row justify-content-center mt-5">
+        <div class="col-11 mx-auto">
+          <div class="rounded p-3 bg-cp">
+            <!-- Radyo butonları -->
+            <div class="row mb-3 ">
+              <input type="hidden" id="IsOneWay" name="IsOneWay" value="false" />
+                <div class="col-auto form-check">
+                  <input type="radio" class="form-check-input" name="flexRadioDefault" id="flexRadioDefault1"  onclick="toggleReturnDate(false)" checked/>
+                  <label for="flexRadioDefault1" class="form-check-label fw-bold fs-7">@_localization.Getkey("Round Trip").Value</label>
+                </div>
+              
+              
+                <div class="col-auto form-check">
+                  <input type="radio" class="form-check-input" name="flexRadioDefault" id="flexRadioDefault2" onclick="toggleReturnDate(true)" />
+                  <label for="flexRadioDefault2" class="form-check-label fw-bold fs-7">@_localization.Getkey("One Way").Value</label>
+                </div>
+            </div>
+
+            <div class="row ">
+              <div class="col-md-2">
+                <label asp-for="From" class="form-label fw-bold fs-8 m-0">@_localization.Getkey("From").Value</label>
+
+
+                <select class="form-select inp-height inp-width" aria-label="Default select example" asp-for="From"
+                  name="From" id="from">
+                  <option value="Ankara">Ankara</option>
+                  <option value="Istanbul">Istanbul</option>
+                  <option value="Denizli">Denizli</option>
+                  <option value="Kırşehir">Kırşehir</option>
+                </select>
+                 
+              </div>
+
+              <div class="col-auto ">
+                <button class="btn btn-white p-2 mt-4 " id="swapButton" onclick="swapValues(event)">
+                  <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                </button>
+              </div> 
+
+
+              <div class="col-md">
+                <label asp-for="To" class="form-label fw-bold fs-8 m-0">@_localization.Getkey("To").Value</label>
+
+                <select class="form-select inp-height inp-width" aria-label="Default select example" asp-for="To"
+                  name="To" id="to">
+
+                  <option value="Ankara">Ankara</option>
+                  <option value="Istanbul">Istanbul</option>
+                  <option value="Denizli">Denizli</option>
+                  <option value="Kırşehir">Kırşehir</option>
+                </select>
+
+              </div>
+
+              <div class="col-md ">
+                <label asp-for="Depart" class="fw-bold fs-8">@_localization.Getkey("Depart").Value</label>
+                <input type="date" name="Depart" id="deparDate" class="form-control inp-height inp-width" asp-for="Depart" />
+
+              </div>
+
+              <div class="col-md">
+                <label asp-for="Return" class="fw-bold fs-8">@_localization.Getkey("Return").Value</label>
+                <input type="date" name="Return" id="returnDate" class="form-control inp-height inp-width" asp-for="Return" />
+
+              </div>
+
+              <div class="col-md">
+                <label asp-for="Guest" class="fw-bold fs-8">@_localization.Getkey("Guest").Value</label>
+                <select class="form-select inp-height inp-width" name="Guest" aria-label="Default select example"
+                  asp-for="Guest">
+                  <option value="Adult">@_localization.Getkey("Adult").Value</option>
+                  <option value="Child(2-12 age)">@_localization.Getkey("Child").Value (2-12) @_localization.Getkey("age").Value</option>
+                  <option value="Infant(0-2 age)">@_localization.Getkey("Infant").Value (0-2) @_localization.Getkey("age").Value</option>
+                </select>
+              </div>
+              <div class="row mt-3">
+                <div class="col ">
+                  <button type="submit" class="btn btn-danger fw-bold fs-8">
+                    @_localization.Getkey("Search Flights").Value
+                  </button>
+                  
+                </div>
+              </div>
+              
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function swapValues(event) {
+      event.preventDefault();
+   // Formun gönderilmesini engelle
+  var from = document.getElementById("from").value;
+  var to = document.getElementById("to").value;
+  
+
+  document.getElementById("from").value = to;
+  document.getElementById("to").value = from;
+}
+
+
+    // Return tarih seçiminin devre dışı bırakılmasını veya etkinleştirilmesini kontrol eden fonksiyon
+    function toggleReturnDate(isOneWay) {
+  var returnDateInput = document.getElementById('returnDate');
+  var isOneWayInput = document.getElementById('IsOneWay');
+
+  // Return tarihini devre dışı bırak veya etkinleştir
+  returnDateInput.disabled = isOneWay;
+
+  // Hidden input alanını güncelle
+  isOneWayInput.value = isOneWay.toString();
+
+  // One Way seçiliyse Return tarihini temizle
+  if (isOneWay) {
+    returnDateInput.value = '';
+  }
+}
+
+  </script> 
+
+      
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

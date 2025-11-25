@@ -56,50 +56,56 @@
   }
   
   else
-  
   {
-    <div class="row">
-      <div class="col-12 py-5">
-        <table class="table table-bordered table-dark">
-          <thead>
-            <tr>
-              <th> @_localization.Getkey("From").Value</th>
-              <th> @_localization.Getkey("To").Value</th>
-              <th> @_localization.Getkey("Time").Value</th>
-              <th> @_localization.Getkey("Seat").Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            @if (!Model.Any())
+    <div class="container py-5">
+      <h2 class="text-center mb-4 text-navy">@_localization.Getkey("Flights").Value</h2>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          @if (!Model.Any())
+          {
+            <div class="alert alert-info text-center">
+              No flights found for your search criteria.
+            </div>
+          }
+          else
+          {
+            foreach (var flight in Model)
             {
-              <p>No flights found.</p>
-            }
-            else
-            {
-  
-              foreach (var flight in Model)
-  
-              {
-                <tr>
-  
-                  <td>@flight.From</td>
-                  <td>@flight.To</td>
-                  <td>@flight.Time</td>
-                  <td>
-  
-  
+              <div class="flight-card mb-4">
+                <div class="flight-card-header">
+                  <span><i class="fas fa-plane me-2"></i>Flight #@flight.FlightId</span>
+                  <span class="badge bg-warning text-dark">Economy</span>
+                </div>
+                <div class="flight-card-body">
+                  <div class="flight-route">
+                    <div class="text-center">
+                      <div class="flight-time">@flight.Time.ToString("HH:mm")</div>
+                      <div class="text-muted">@flight.From</div>
+                    </div>
+                    <div class="flight-duration">
+                      <i class="fas fa-plane text-navy"></i>
+                      <div>Direct</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="flight-time">@flight.Time.AddHours(1).ToString("HH:mm")</div> <!-- Dummy duration -->
+                      <div class="text-muted">@flight.To</div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center mt-3 border-top pt-3">
+                    <div class="me-3">
+                      <span class="text-muted small">Starting from</span>
+                      <div class="h4 text-navy mb-0">$150</div> <!-- Dummy price -->
+                    </div>
                     <a href="@Url.Action("ChooseSeats", "Seat", new { flightId = flight.FlightId })"
-                      class="btn btn-sm btn-primary">@_localization.Getkey("Seat").Value @_localization.Getkey("Choose").Value</a>
-  
-                  </td>
-                </tr>
-              }
+                       class="btn btn-modern">
+                       @_localization.Getkey("Seat").Value @_localization.Getkey("Choose").Value
+                    </a>
+                  </div>
+                </div>
+              </div>
             }
-          </tbody>
-  
-  
-        </table>
+          }
+        </div>
       </div>
     </div>
-  
   }

@@ -1,114 +1,150 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject LanguageService _localization
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@ViewData["Title"] - AirlineSeatReservationSystem</title>
+  <title>@ViewData["Title"] - ERBAS AIRLINES</title>
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/AirlineSeatReservationSystem.styles.css" asp-append-version="true" />
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm" style="background-color: #e3f2fd;">
-
-      <div class="container-fluid">
-        <a class="navbar-brand" asp-controller="Flight" asp-action="Index">Airlines Website</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy sticky-top shadow-sm py-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" asp-controller="Flight" asp-action="Index">
+          <i class="fas fa-plane-departure me-2 text-gold fa-lg"></i>
+          <span class="fw-bold text-uppercase letter-spacing-1">ERBAS AIRLINES</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
           aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-          <ul class="navbar-nav ms-auto">
-          @if (User.Identity!.IsAuthenticated)
-
-          {
-            @if (User.IsInRole("admin"))
-
+          <ul class="navbar-nav ms-auto align-items-center">
+            @if (User.Identity!.IsAuthenticated)
             {
-              <li class="nav-item">
-                <a class="nav-link" asp-controller="Flight" asp-action="ListFlights">Admin</a>
-
-              </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link  " asp-controller="Flight" asp-action="Index">Home</a>
-
-              </li> -->
-              <li class="nav-item">
-                <a href="" class="nav-link">@User.Identity.Name</a>
-              </li>
-              <li class="nav-item">
-                <a href="/users/logout" class="nav-link">@_localization.Getkey("Logout").Value</a>
-              </li>
+              @if (User.IsInRole("admin"))
+              {
+                <li class="nav-item">
+                  <a class="nav-link text-white mx-2" asp-controller="Flight" asp-action="ListFlights">Admin Dashboard</a>
+                </li>
+                <li class="nav-item">
+                  <span class="nav-link text-gold mx-2">Welcome, @User.Identity.Name</span>
+                </li>
+                <li class="nav-item">
+                  <a href="/users/logout" class="btn btn-modern btn-sm ms-2">@_localization.Getkey("Logout").Value</a>
+                </li>
+              }
+              else
+              {
+                <li class="nav-item">
+                  <a class="nav-link text-white mx-2" asp-controller="Booking" asp-action="MyBookings">@_localization.Getkey("Flights").Value</a>
+                </li>
+                <li class="nav-item">
+                  <span class="nav-link text-gold mx-2">Welcome, @User.Identity.Name</span>
+                </li>
+                <li class="nav-item">
+                  <a href="/users/logout" class="btn btn-modern btn-sm ms-2">@_localization.Getkey("Logout").Value</a>
+                </li>
+              }
             }
-
             else
-
             {
-
               <li class="nav-item">
-                <a class="nav-link" asp-controller="Booking" asp-action="MyBookings">@_localization.Getkey("Flights").Value</a>
-
+                <a class="nav-link text-white mx-2" asp-controller="Users" asp-action="SignUp">@_localization.Getkey("Sign Up").Value</a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">@User.Identity.Name</a>
-              </li>
-              <li class="nav-item">
-                <a href="/users/logout" class="nav-link">@_localization.Getkey("Logout").Value</a>
+                <a class="nav-link text-white mx-2" asp-controller="Users" asp-action="SignIn">@_localization.Getkey("Sign In").Value</a>
               </li>
             }
 
-
-          }
-
-          else
-
-          {
-            
-            <li class="nav-item">
-              <a class="nav-link" asp-controller="Users" asp-action="SignUp">@_localization.Getkey("Sign Up").Value</a>
-
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" asp-controller="Users" asp-action="SignIn">@_localization.Getkey("Sign In").Value</a>
-
-            </li>
-          }
-
-          <li class="nav-item">
-            <div class="btn-group">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Dil
-              </button>
-              <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item"
-                  href="@Url.Action("ChangeLanguage", "Flight", new { culture = "tr-TR" })">Türkçe</a>
-                <a class="dropdown-item"
-                  href="@Url.Action("ChangeLanguage", "Flight", new { culture = "en-US" })">English</a>
+            <li class="nav-item ms-3">
+              <div class="dropdown">
+                <button class="btn btn-link text-white dropdown-toggle text-decoration-none" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-globe me-1"></i> Language
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="languageDropdown">
+                  <li><a class="dropdown-item" href="@Url.Action("ChangeLanguage", "Flight", new { culture = "tr-TR" })">Türkçe</a></li>
+                  <li><a class="dropdown-item" href="@Url.Action("ChangeLanguage", "Flight", new { culture = "en-US" })">English</a></li>
+                </ul>
               </div>
-            </div>
-
-          </li>
-        </ul>
+            </li>
+          </ul>
         </div>
-        
-      </div>
       </div>
     </nav>
   </header>
 
-  <div class="container">
-    <main role="main" class="pb-3">@RenderBody()</main>
+  <div class="container flex-grow-1 my-5">
+    <main role="main" class="pb-3">
+      @RenderBody()
+    </main>
   </div>
+
+  <footer class="bg-navy text-white pt-5 pb-3 mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5 class="text-gold text-uppercase fw-bold mb-3">ERBAS AIRLINES</h5>
+          <p class="small text-white-50">Experience the world with premium comfort and exceptional service. Your journey begins with us.</p>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3">About</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Our Story</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Fleet</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3">Support</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Help Center</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Baggage</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3">Newsletter</h6>
+          <p class="small text-white-50">Subscribe for exclusive offers and updates.</p>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control border-0" placeholder="Email address" aria-label="Email address">
+            <button class="btn btn-modern" type="button">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="small text-white-50 mb-0">&copy; @DateTime.Now.Year ERBAS AIRLINES. All rights reserved. | <a href="https://mefeerbas.com/" class="text-gold text-decoration-none" target="_blank">mefeerbas.com</a></p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <ul class="list-inline small mb-0">
+            <li class="list-inline-item"><a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="#" class="text-white-50 text-decoration-none">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>

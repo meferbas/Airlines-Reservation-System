@@ -5,13 +5,14 @@
 <head>
   <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
   <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <div class="card">
-          <div class="card-header bg-dark text-white" >
+        <div class="auth-card">
+          <div class="card-header">
             <h2 class="text-center">@_localization.Getkey("Sign Up").Value</h2>
           </div>
           <div class="card-body">
@@ -48,7 +49,9 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
               </div>
 
-              <button type="submit" class="btn btn-danger">@_localization.Getkey("Sign Up").Value</button>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-modern btn-lg" style="background-color: #FFC107 !important; color: #002244 !important;">@_localization.Getkey("Sign Up").Value</button>
+              </div>
             </form>
           </div>
         </div>

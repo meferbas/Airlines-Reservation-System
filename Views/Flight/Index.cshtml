@@ -26,99 +26,89 @@
   <title>Ana Sayfa</title>
 </head>
 <body>
-  <div class="container-fluid">
-    <form action="/Flight/SearchFlights" method="post">
-      <!-- Index.cshtml içinde <form> tag'ı içinde -->
-
-
-      <div class="row justify-content-center mt-5">
-        <div class="col-11 mx-auto">
-          <div class="rounded p-3 bg-cp">
-            <!-- Radyo butonları -->
-            <div class="row mb-3 ">
-              <input type="hidden" id="IsOneWay" name="IsOneWay" value="false" />
-                <div class="col-auto form-check">
-                  <input type="radio" class="form-check-input" name="flexRadioDefault" id="flexRadioDefault1"  onclick="toggleReturnDate(false)" checked/>
-                  <label for="flexRadioDefault1" class="form-check-label fw-bold fs-7">@_localization.Getkey("Round Trip").Value</label>
+  <div class="container-fluid hero-section d-flex align-items-center justify-content-center" style="min-height: 80vh; background-image: url('/img/hero-bg.jpg'); background-size: cover; background-position: center;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="search-container">
+            <form action="/Flight/SearchFlights" method="post">
+              <!-- Radio Buttons -->
+              <div class="row mb-4">
+                <input type="hidden" id="IsOneWay" name="IsOneWay" value="false" />
+                <div class="col-auto form-check me-4">
+                  <input type="radio" class="form-check-input" name="flexRadioDefault" id="flexRadioDefault1" onclick="toggleReturnDate(false)" checked />
+                  <label for="flexRadioDefault1" class="form-check-label">@_localization.Getkey("Round Trip").Value</label>
                 </div>
-              
-              
                 <div class="col-auto form-check">
                   <input type="radio" class="form-check-input" name="flexRadioDefault" id="flexRadioDefault2" onclick="toggleReturnDate(true)" />
-                  <label for="flexRadioDefault2" class="form-check-label fw-bold fs-7">@_localization.Getkey("One Way").Value</label>
+                  <label for="flexRadioDefault2" class="form-check-label">@_localization.Getkey("One Way").Value</label>
                 </div>
-            </div>
-
-            <div class="row ">
-              <div class="col-md-2">
-                <label asp-for="From" class="form-label fw-bold fs-8 m-0">@_localization.Getkey("From").Value</label>
-
-
-                <select class="form-select inp-height inp-width" aria-label="Default select example" asp-for="From"
-                  name="From" id="from">
-                  <option value="Ankara">Ankara</option>
-                  <option value="Istanbul">Istanbul</option>
-                  <option value="Denizli">Denizli</option>
-                  <option value="Kırşehir">Kırşehir</option>
-                </select>
-                 
               </div>
 
-              <div class="col-auto ">
-                <button class="btn btn-white p-2 mt-4 " id="swapButton" onclick="swapValues(event)">
-                  <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                </button>
-              </div> 
+              <div class="row g-3 align-items-end">
+                <!-- From -->
+                <div class="col-md-3">
+                  <label asp-for="From" class="form-label">@_localization.Getkey("From").Value</label>
+                  <select class="form-select" asp-for="From" name="From" id="from">
+                    <option value="Ankara">Ankara</option>
+                    <option value="Istanbul">Istanbul</option>
+                    <option value="Denizli">Denizli</option>
+                    <option value="Kırşehir">Kırşehir</option>
+                  </select>
+                </div>
 
+                <!-- Swap Button -->
+                <div class="col-md-1 text-center">
+                  <button type="button" class="btn btn-outline-light rounded-circle" id="swapButton" onclick="swapValues(event)">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                  </button>
+                </div>
 
-              <div class="col-md">
-                <label asp-for="To" class="form-label fw-bold fs-8 m-0">@_localization.Getkey("To").Value</label>
+                <!-- To -->
+                <div class="col-md-3">
+                  <label asp-for="To" class="form-label">@_localization.Getkey("To").Value</label>
+                  <select class="form-select" asp-for="To" name="To" id="to">
+                    <option value="Ankara">Ankara</option>
+                    <option value="Istanbul">Istanbul</option>
+                    <option value="Denizli">Denizli</option>
+                    <option value="Kırşehir">Kırşehir</option>
+                  </select>
+                </div>
 
-                <select class="form-select inp-height inp-width" aria-label="Default select example" asp-for="To"
-                  name="To" id="to">
+                <!-- Depart -->
+                <div class="col-md-2">
+                  <label asp-for="Depart" class="form-label">@_localization.Getkey("Depart").Value</label>
+                  <input type="date" name="Depart" id="deparDate" class="form-control" asp-for="Depart" />
+                </div>
 
-                  <option value="Ankara">Ankara</option>
-                  <option value="Istanbul">Istanbul</option>
-                  <option value="Denizli">Denizli</option>
-                  <option value="Kırşehir">Kırşehir</option>
-                </select>
+                <!-- Return -->
+                <div class="col-md-2">
+                  <label asp-for="Return" class="form-label">@_localization.Getkey("Return").Value</label>
+                  <input type="date" name="Return" id="returnDate" class="form-control" asp-for="Return" />
+                </div>
 
-              </div>
+                <!-- Guest -->
+                <div class="col-md-12 mt-3">
+                  <label asp-for="Guest" class="form-label">@_localization.Getkey("Guest").Value</label>
+                  <select class="form-select" name="Guest" asp-for="Guest">
+                    <option value="Adult">@_localization.Getkey("Adult").Value</option>
+                    <option value="Child(2-12 age)">@_localization.Getkey("Child").Value (2-12)</option>
+                    <option value="Infant(0-2 age)">@_localization.Getkey("Infant").Value (0-2)</option>
+                  </select>
+                </div>
 
-              <div class="col-md ">
-                <label asp-for="Depart" class="fw-bold fs-8">@_localization.Getkey("Depart").Value</label>
-                <input type="date" name="Depart" id="deparDate" class="form-control inp-height inp-width" asp-for="Depart" />
-
-              </div>
-
-              <div class="col-md">
-                <label asp-for="Return" class="fw-bold fs-8">@_localization.Getkey("Return").Value</label>
-                <input type="date" name="Return" id="returnDate" class="form-control inp-height inp-width" asp-for="Return" />
-
-              </div>
-
-              <div class="col-md">
-                <label asp-for="Guest" class="fw-bold fs-8">@_localization.Getkey("Guest").Value</label>
-                <select class="form-select inp-height inp-width" name="Guest" aria-label="Default select example"
-                  asp-for="Guest">
-                  <option value="Adult">@_localization.Getkey("Adult").Value</option>
-                  <option value="Child(2-12 age)">@_localization.Getkey("Child").Value (2-12) @_localization.Getkey("age").Value</option>
-                  <option value="Infant(0-2 age)">@_localization.Getkey("Infant").Value (0-2) @_localization.Getkey("age").Value</option>
-                </select>
-              </div>
-              <div class="row mt-3">
-                <div class="col ">
-                  <button type="submit" class="btn btn-danger fw-bold fs-8">
+                <!-- Search Button -->
+                <div class="col-12 mt-4 text-end">
+                  <button type="submit" class="btn btn-primary btn-lg px-5">
                     @_localization.Getkey("Search Flights").Value
                   </button>
-                  
                 </div>
               </div>
-              
+            </form>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 
   <script>

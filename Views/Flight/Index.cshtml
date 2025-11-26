@@ -1,5 +1,9 @@
 ﻿@model FlightViewModel
 
+@section Styles {
+  <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">
@@ -15,17 +19,6 @@
   </div>
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" /> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-  <title>Ana Sayfa</title>
-</head>
-<body>
   <div class="container-fluid hero-section d-flex align-items-center justify-content-center" style="min-height: 80vh; background-image: url('/img/hero-bg.jpg'); background-size: cover; background-position: center;">
     <div class="container">
       <div class="row justify-content-center">
@@ -142,10 +135,3 @@
 }
 
   </script> 
-
-      
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-</body>
-</html>

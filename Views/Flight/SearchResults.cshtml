@@ -79,7 +79,7 @@
                 <div class="flight-card-body">
                   <div class="flight-route">
                     <div class="text-center">
-                      <div class="flight-time">@flight.Time.ToString("HH:mm")</div>
+                      <div class="flight-time">@flight.Time</div>
                       <div class="text-muted">@flight.From</div>
                     </div>
                     <div class="flight-duration">
@@ -87,7 +87,7 @@
                       <div>Direct</div>
                     </div>
                     <div class="text-center">
-                      <div class="flight-time">@flight.Time.AddHours(1).ToString("HH:mm")</div> <!-- Dummy duration -->
+                      <div class="flight-time">--:--</div>
                       <div class="text-muted">@flight.To</div>
                     </div>
                   </div>
